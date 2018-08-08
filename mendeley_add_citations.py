@@ -23,9 +23,12 @@ import yaml
 # skip documents already processed
 skip_documents = True
 
+# save cookie in init
+save_cookie = True
+
 # min and max sleep time in seconds between Scholar requests
-min_sleep_time_sec = 5
-max_sleep_time_sec = 20
+min_sleep_time_sec = 10
+max_sleep_time_sec = 30
 
 # minimal difflib.SequenceMatcher ratio for 
 # Mendeley x Scholar title matching 
@@ -101,9 +104,17 @@ def has_citation_tag(tags, patterns):
     return False
 
 
-def process(document):        
+def process(document):
     scholar = ScholarQuerier() 
     query = SearchScholarQuery()
+
+    # save cookie at first paper
+    global save_cookie
+    if save_cookie:
+        query.set_phrase("quantum theory")
+        scholar.send_query(query)
+        save_cookie = False
+
     query.set_phrase(document.title)
     scholar.send_query(query)
     scholar_articles = scholar.articles
@@ -167,8 +178,7 @@ def add_citations():
     mendeley_session = get_session_from_cookies()
     if 'process_id' not in session or 'ids' not in user_data:
         session['process_id'] = 0
-        user_data['ids'] = [doc.id for doc in mendeley_session.documents.iter()]       
-    
+        user_data['ids'] = [doc.id for doc in mendeley_session.documents.iter()]
     if skip_documents:
         while True:
             document = mendeley_session.documents.get(

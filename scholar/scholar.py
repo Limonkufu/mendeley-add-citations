@@ -249,7 +249,7 @@ class ScholarConf(object):
 
     # If set, we will use this file to read/save cookies to enable
     # cookie use across sessions.
-    COOKIE_JAR_FILE = None
+    COOKIE_JAR_FILE = 'scholar-cookies.txt'
 
 class ScholarUtils(object):
     """A wrapper for various utensils that come in handy."""
@@ -1307,8 +1307,8 @@ scholar.py -c 5 -a "albert einstein" -t --none "quantum theory" --after 1970"""
     else:
         txt(querier, with_globals=options.txt_globals)
 
-    if options.cookie_file:
-        querier.save_cookies()
+    # if options.cookie_file:
+    querier.save_cookies()
 
     return 0
 
