@@ -36,7 +36,7 @@ On the first run you will be asked to go to an url where you have to grant acces
 You can set a few options at the beginning of `mendeley-add-citations.py`.
 
 The whole process takes from **tens of minutes** to **hours**. There are 
-pauses between requests to Google Scholar between 5 and 20 seconds to avoid being blocked
+pauses between requests to Google Scholar between 15 and 30 seconds to avoid being blocked
 by Google.
 
 Known Problems
