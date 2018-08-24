@@ -113,6 +113,7 @@ def process(document):
     if save_cookie:
         query.set_phrase("quantum theory")
         scholar.send_query(query)
+        scholar.save_cookies()
         save_cookie = False
 
     query.set_phrase(document.title)
@@ -129,6 +130,7 @@ def process(document):
     old_tags = document.tags
     citation_tag = ncitations_to_tag(scholar_articles[0]['num_citations'])
     new_tags = update_tags(old_tags, [(tag_pattern, citation_tag)])
+    new_tags.append(str(scholar_articles[0]['num_citations']))
     document.update(tags=new_tags)
     
     return scholar_articles[0]['num_citations']
